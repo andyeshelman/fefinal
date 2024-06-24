@@ -1,0 +1,16 @@
+#appContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(49, 49, 49);
+    color: white;
+    min-height: 100vh;
+    padding-top: 56px;
+}
+  
+.panel {
+    height: 70vh;
+    overflow-y: scroll;
+}
