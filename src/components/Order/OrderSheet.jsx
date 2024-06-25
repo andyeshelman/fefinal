@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Container from 'react-bootstrap/Container';
 import Stack from 'react-bootstrap/Stack';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { Button } from 'react-bootstrap';
 
 import api from '../../../public/api';
 
-function OrderSheet({ orderId }) {
+function OrderSheet({ orderId, setOrderId, updateOrders }) {
   const [details, setDetails] = useState({
     order: {},
     products: []
@@ -14,16 +17,37 @@ function OrderSheet({ orderId }) {
   useEffect( () => {
     api.get(`/orders/${orderId}`).then(
       response => {setDetails(response.data)
-        console.log("response")
       }
     ).catch(
       error => console.log(error)
     )
   }, [orderId])
 
+  function handleDelete() {
+    api.delete(`/orders/${orderId}`).then(
+      response => {
+        console.log(response)
+        updateOrders()
+        setOrderId(null)
+      }
+    ).catch(
+      error => console.log(error)
+    )
+  }
+
   return (
     <Container className="panel border rounded p-2">
-      <h3>Order ID: {orderId}</h3>
+      <Row>
+        <Col xs={8}>
+          <h3>Order ID: {orderId}</h3>
+        </Col>
+
+        <Col xs={2}>
+          <Button variant="outline-danger" onClick={handleDelete}>
+            Del
+          </Button>
+        </Col>
+      </Row>
       <Stack>
         <div className="p-2">Customer ID: {details.order.customer_id}</div>
         <div className="p-2">Date: {details.order.date}</div>

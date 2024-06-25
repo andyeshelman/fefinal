@@ -54,11 +54,11 @@ function CustomerSheet({ customerId, setCustomerId, updateCustomers }) {
       response => {
         console.log(response)
         updateCustomers()
+        setCustomerId(null)
       }
     ).catch(
       error => console.log(error)
     )
-    setCustomerId(null)
   }
 
   function customerChange(event){
